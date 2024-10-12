@@ -115,14 +115,11 @@ def clean_title(movie: str) -> str:
 
     return title_nospace_and_caps'''
 
-
     title_split = movie.split()
-
     title_clean_split = [word.capitalize() for word in title_split]
-
     clean_title_clean = " ".join(title_clean_split)
-
     return clean_title_clean
+
 
 def convert_rating(val: int, min_stars: int = __MIN_STARS, max_stars: int = __MAX_STARS) -> str:
     """Converts rating to stars (*) equal
