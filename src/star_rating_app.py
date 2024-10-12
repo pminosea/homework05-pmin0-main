@@ -64,6 +64,11 @@ def convert_str_movie_tuple(val: str) -> Tuple[str, int]:
         ('Princess Bride', 10)
         >>> convert_str_movie_tuple("   JurAssic shARk  ,    1  ")
         ('Jurassic Shark', 1)
+        >>> convert_str_movie_tuple("   1917  ,    100  ")
+        ('1917', 100)
+        >>> convert_str_movie_tuple(" AVATAR  ,    1 ")
+        ('Avatar', 1)
+
 
     Args:
         val (str): String in the format of "movie,rating"
@@ -90,6 +95,12 @@ def clean_title(movie: str) -> str:
         'Princess Bride'
         >>> clean_title("it's a wonderful life")
         'It's A Wonderful Life'
+        >>> clean_title("1917")
+        '1917'
+        >>> clean_title("101 Dalmatians   ")
+        '101 Dalmatians'
+        >>> clean_title("  AVATAR ")
+        'Avatar'
 
     See:
         https://docs.python.org/3/library/string.html#helper-functions
@@ -109,9 +120,9 @@ def clean_title(movie: str) -> str:
 
     title_clean_split = [word.capitalize() for word in title_split]
 
-    clean_title = ' '.join(title_clean_split)
+    clean_title_clean = " ".join(title_clean_split)
 
-    return clean_title
+    return clean_title_clean
 
 def convert_rating(val: int, min_stars: int = __MIN_STARS, max_stars: int = __MAX_STARS) -> str:
     """Converts rating to stars (*) equal
@@ -119,10 +130,22 @@ def convert_rating(val: int, min_stars: int = __MIN_STARS, max_stars: int = __MA
     return max_stars stars, and any value under min_stars
     will return min_stars star.
 
+
     Args:
         val (int): the rating value
         min_stars (int, optional): the minimum number of stars to return. Defaults to _MIN_STARS.
         max_stars (int, optional): the maximum number of stars to return. Defaults to _MAX_STARS.
+
+    Examples:
+        >>> convert_rating(0)
+        '*'
+        >>> convert_rating(100)
+        '*****'
+        >>> convert_rating(1, 1, 5)
+        '*'
+        >>> convert_rating(5)
+        '*****'
+
 
     Returns:
         str: stars between min_stars and max_stars
@@ -168,6 +191,12 @@ def check_filter(movie: Tuple[str, int], filter: str) -> bool:
         >>> check_filter(("Princess Bride", 10), "!= 10")
         False
         >>> check_filter(("Princess Bride", 10), "")
+        True
+        >>> check_filter(("Avatar", 3), "> 2")
+        True
+        >>> check_filter(("Jurassic Park", 3), "Jurassic")
+        True
+        >>> check_filter(("District 9", 0), "District")
         True
 
 
